@@ -70,11 +70,11 @@ macvitals-*.txt
 - [ ] Add README screenshots showing Thermals, the five optional status items/popovers,
       and both compact widget sizes.
 - [x] Review the renamed working tree and prepare sanitized `main` from a fresh root commit for the public repository.
-- [ ] Set the repo's **About**, topics (`macos`, `apple-silicon`, `menubar`,
+- [x] Set the repo's **About**, topics (`macos`, `apple-silicon`, `menubar`,
       `swiftui`, `temperature`, `fan`, `cpu-monitor`, `memory-monitor`,
       `network-monitor`, `battery`, `disk-space`), and license (GitHub auto-detects
       `LICENSE`).
-- [ ] Cut a release: tag `v1.0`, write release notes.
+- [x] Cut a release: tag `v1.0`, write release notes.
 - [x] In the README build steps, tell users to set their own Team + bundle ID.
 
 Publishing source needs no paid membership, signing, or notarization. A contributor
@@ -152,7 +152,7 @@ certificate, and your **App Group** ID registered to your Team.
       website needed to start.
 - [x] **CI workflow:** `.github/workflows/ci.yml` is configured to run unit tests and
       a Release build on push/PR.
-- [ ] **Hosted CI result:** require a passing run for the exact release commit.
+- [x] **Hosted CI result:** require a passing run for the exact release commit.
 
 ---
 
