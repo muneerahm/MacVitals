@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+.build/
+*.xcresult
+*.profraw
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+*.moved-aside
+
+# MacVitals debug/triage dumps (should never be committed)
+macvitals-*.txt
+
+# MacVitals local CSV log (written to ~/Documents/MacVitals, but ignore if copied here)
+macvitals-log.csv
