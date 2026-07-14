@@ -90,7 +90,7 @@ or other private battery fields.
 - Build artifacts and any temporary debug dumps are excluded from the repo via
   `.gitignore`; verify none ship in a release.
 - The app has no third-party runtime or package dependencies. Hosted CI uses
-  GitHub's `actions/checkout@v4`, which remains part of the CI supply chain.
+  GitHub's pinned `actions/checkout` v6.0.2 commit, which remains part of the CI supply chain.
 
 ## Could installing this enable malicious use?
 

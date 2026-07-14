@@ -64,7 +64,7 @@ tests. These are documented robustness/test-matrix gaps, not observed failures.
 - No outbound network connection, listener/server, packet capture, process
   enumeration, helper/subprocess/shell, downloaded code, telemetry, analytics,
   embedded credential, or app runtime/package dependency was found. GitHub CI uses
-  the external `actions/checkout@v4` action and remains part of the CI supply chain.
+  the externally maintained pinned `actions/checkout` v6.0.2 commit, which remains part of the CI supply chain.
 - The Network module reads a selected BSD interface name and aggregate counters from
   local APIs. Latest values may be written to `snapshot.json`; they are never added
   to CSV or transmitted.
