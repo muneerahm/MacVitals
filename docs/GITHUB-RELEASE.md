@@ -19,7 +19,9 @@ git remote add origin git@github.com:<account>/MacVitals.git
 git push -u origin main
 ```
 
-Let hosted CI pass on the exact public commit before tagging. Signed App Group/widget verification and current screenshots remain explicitly tracked follow-ups for binary distribution and broader release polish.
+Let hosted CI pass on the exact public commit before tagging. Signed App Group/widget
+verification and widget screenshots remain explicitly tracked follow-ups for binary
+distribution and broader release polish; current app-popover screenshots are in the README.
 
 ## Draft v1.0 release notes
 
@@ -81,5 +83,5 @@ git tag -a v1.0 -m "MacVitals 1.0"
 git push origin v1.0
 ```
 
-Do not create the tag until CI passes and the final README screenshots match the
-merged code.
+For future tags, require passing CI and confirm the README screenshots still match
+the merged UI.

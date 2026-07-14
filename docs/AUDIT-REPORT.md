@@ -13,11 +13,14 @@ hardware or visual coverage beyond the evidence listed below.
 
 No known Critical, High, or Medium severity source issue remains. MacVitals now exposes
 separate Thermals, CPU, Memory, Network, Battery, and Disk menu-bar items while all
-six views share one sampler. The reviewed source passes 34 unit tests, a clean
+six views share one sampler. The reviewed source passes 37 unit tests, a clean
 universal Release build, and Xcode static analysis.
 
-Path A source verification is complete. Current screenshots, a locked/clean-Mac visual pass, signed App Group/widget verification, hosted CI, GitHub publication, and broader hardware runtime checks remain release or post-publication gates. Path B remains entirely gated on Developer ID
-signing and notarization.
+Path A source verification and publication are complete. Privacy-safe screenshots of
+the six app popovers are now in the README, and the code-level accessibility review is
+complete. Interactive VoiceOver/clean-Mac behavior, signed App Group/widget verification,
+widget screenshots, and broader hardware runtime checks remain post-publication gates.
+Path B remains entirely gated on Developer ID signing and notarization.
 
 ## Expansion findings and disposition
 
@@ -51,7 +54,7 @@ and continue to pass their regression tests.
 | Network | Works in development environment | Local active-interface aggregate rates/session counters and chart. No request or packet/connection inspection. Baseline resets safely. |
 | Battery | Hardware-dependent | Public percentage/state/source/time/condition/Low Power Mode only; desktop Macs degrade to no internal battery. |
 | Disk | Works in development environment | Startup-volume used/available/total, refreshed at most once per minute. No SMART or I/O throughput. |
-| Visibility | Works by code/test review | Thermals always shows CPU temperature; new installs enable only the optional CPU item. Optional-item visibility is in a fixed bottom Menu bar modules section, and Thermals cannot be removed. Final click-through visual matrix remains open because the Mac was locked. |
+| Visibility | Works by code/test/render review | Thermals always shows CPU temperature; new installs enable only the optional CPU item. The privacy-safe fresh-state render confirms CPU-only defaults in the fixed bottom Menu bar modules section. Interactive hide/restore and crowding remain open. |
 | Widget | Builds / signed runtime open | Small and medium layouts now include compact system metrics. Unsigned compile runs cannot verify App Group sharing; signed runtime and screenshots remain open. |
 
 Accepted Low follow-ups: live-but-unhealthy sensor handles are only retried when the
@@ -84,30 +87,29 @@ Executed on arm64 macOS 26.5.1 with Xcode 26.6:
 
 | Gate | Result |
 |---|---|
-| `MacVitalsTests` | Passed — **36/36** |
+| `MacVitalsTests` | Passed — **37/37** |
 | Clean unsigned Release build | Passed — universal arm64 + x86_64 |
 | Xcode Release static analysis | Passed |
 | Debug app-host regression | Passed; prior six-scene launch loop eliminated |
 | Release runtime samples | Six 5-second observations at a configured 10-second poll interval: 0.0% CPU except one 0.5% wake; 4–5 threads; about 19 MB private memory and roughly 77 MB RSS |
 | Release bundle size | About 7.4 MiB; main universal executable about 3.09 MB (exact bytes vary between otherwise equivalent clean builds) |
 | Entitlement source review | Main app: App Group only, unsandboxed; widget: App Sandbox + App Group; no network entitlements |
-| Source privacy scan | Current files contain no former-brand, Team ID, personal path/name/email, credential, network connection/listener, process enumeration, helper/shell, or app dependency match; the documented BSD interface name remains local. Existing Git history still needs sanitizing before publication. |
-| UI automation | Blocked: the Mac remained locked, so status-item clicking, VoiceOver, popover sizing, crowding, and widget screenshots are not marked complete |
+| Source privacy scan | Current files contain no former-brand, Team ID, personal path/name/email, credential, network connection/listener, process enumeration, helper/shell, or app dependency match; the documented BSD interface name remains local. Public history was rebuilt from a sanitized root before publication. |
+| Rendered UI review | Passed for Thermals plus CPU, Memory, Network, Battery, and Disk using real SwiftUI views and representative mock data; screenshots are tightly scoped and contain no personal/live-machine data. |
+| Accessibility code review | Passed: status-item labels, descriptive unavailable values, chart/timestamp/slider labels, combined rows, and progress-control semantics are present. |
+| Interactive UI / VoiceOver | Blocked by the unavailable/locked desktop session. Spoken navigation, status announcements, menu-bar crowding, hide/restore, and live widget layouts are not marked complete. |
 
 ## Remaining manual/external gates
 
-1. Review and commit the renamed tree, then publish from sanitized/squashed history
-   so old commit authors and messages are not exposed.
-2. Unlock and run the visual matrix: six compact status items, all popovers and
+1. Unlock and run the interactive matrix: six compact status items, all popovers and
    disclosures, hide/restore, menu-bar crowding/notch behavior, VoiceOver labels,
    and both widget sizes.
-3. Run a signed build with final Team, bundle IDs, and registered App Group; verify
+2. Run a signed build with final Team, bundle IDs, and registered App Group; verify
    current thermal/system data reaches the widget.
-4. Exercise a clean Mac plus fanless, desktop/no-battery, additional battery, and
+3. Exercise a separate clean Mac plus fanless, desktop/no-battery, additional battery, and
    Intel hardware before broadening claims.
-5. Add current screenshots to the README, publish the GitHub repository/branch,
-   require hosted CI, review the final diff, merge, and only then tag `v1.0`.
-6. For Path B, complete every Developer ID sign/notarize/staple/Gatekeeper step in
+4. Add small/medium widget screenshots after the signed App Group pass.
+5. For Path B, complete every Developer ID sign/notarize/staple/Gatekeeper step in
    `RELEASE-CHECKLIST.md`; none is inferred from an unsigned build.
 
 ## Defaults and alternatives

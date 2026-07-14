@@ -226,23 +226,27 @@ enum ModuleKind: CaseIterable, Equatable {
         switch self {
         case .cpu:
             let value = MetricFormat.percent(snapshot?.system?.cpu?.totalUsage)
-            return ModulePresentation(symbol: "cpu", value: value, accessibilityLabel: "CPU usage \(value)")
+            return ModulePresentation(symbol: "cpu", value: value, accessibilityLabel: "CPU usage \(spoken(value))")
         case .memory:
             let value = MetricFormat.percent(snapshot?.system?.memory?.usedFraction)
-            return ModulePresentation(symbol: "memorychip", value: value, accessibilityLabel: "Memory used \(value)")
+            return ModulePresentation(symbol: "memorychip", value: value, accessibilityLabel: "Memory used \(spoken(value))")
         case .network:
             let network = snapshot?.system?.network
             let compact = "↓\(MetricFormat.compactRate(network?.downloadBytesPerSecond)) ↑\(MetricFormat.compactRate(network?.uploadBytesPerSecond))"
-            let accessible = "Network download \(MetricFormat.rate(network?.downloadBytesPerSecond)), upload \(MetricFormat.rate(network?.uploadBytesPerSecond))"
+            let accessible = "Network download \(spoken(MetricFormat.rate(network?.downloadBytesPerSecond))), upload \(spoken(MetricFormat.rate(network?.uploadBytesPerSecond)))"
             return ModulePresentation(symbol: "arrow.up.arrow.down", value: compact, accessibilityLabel: accessible)
         case .battery:
             let battery = snapshot?.system?.battery
             let value = MetricFormat.percent(battery?.percentage)
-            return ModulePresentation(symbol: batterySymbol(battery), value: value, accessibilityLabel: "Battery \(value)")
+            return ModulePresentation(symbol: batterySymbol(battery), value: value, accessibilityLabel: "Battery \(spoken(value))")
         case .disk:
             let value = MetricFormat.percent(snapshot?.system?.disk?.usedFraction)
-            return ModulePresentation(symbol: "internaldrive", value: value, accessibilityLabel: "Startup disk used \(value)")
+            return ModulePresentation(symbol: "internaldrive", value: value, accessibilityLabel: "Startup disk used \(spoken(value))")
         }
+    }
+
+    private func spoken(_ value: String) -> String {
+        value == "—" ? "unavailable" : value
     }
 
     private func batterySymbol(_ battery: BatteryMetrics?) -> String {

@@ -104,7 +104,7 @@ then:
 1. Tell me exactly what's still incomplete for each path (app icon, version numbers,
    .gitignore, leftover debug files, DEVELOPMENT_TEAM, App Group registration,
    signing, notarization).
-   Include the six-module visual matrix, clean Release build, 34-test result, hosted
+   Include the six-module visual matrix, clean Release build, current unit-test result, hosted
    CI, locked/clean-Mac behavior, widget/App Group runtime, Intel and additional
    hardware coverage, and idle CPU/memory evidence.
 2. Give me the precise commands to sign, notarize, staple, and package a DMG, and

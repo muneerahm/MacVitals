@@ -99,7 +99,10 @@ struct MenuBarView: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {
                 if let date = model.snapshot?.date {
-                    Text(date, style: .time).font(.caption2).foregroundStyle(.secondary)
+                    Text(date, style: .time)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .accessibilityLabel("Last updated \(date.formatted(date: .omitted, time: .shortened))")
                 }
                 if let pressure = model.snapshot?.thermalPressure, pressure != "Nominal" {
                     Text(pressure)
@@ -143,6 +146,7 @@ struct MenuBarView: View {
                 .foregroundStyle(color(for: celsius))
         }
         .font(.system(size: 13))
+        .accessibilityElement(children: .combine)
     }
 
     private func color(for celsius: Double?) -> Color {
@@ -182,6 +186,8 @@ struct MenuBarView: View {
         .chartXAxis(.hidden)
         .chartLegend(position: .bottom, spacing: 2)
         .frame(height: 70)
+        .accessibilityLabel("Temperature history")
+        .accessibilityValue(temperatureHistorySummary)
     }
 
     // MARK: Fans
@@ -208,7 +214,10 @@ struct MenuBarView: View {
                         }
                         .font(.system(size: 13))
                         if let normalized = fan.normalized {
-                            ProgressView(value: normalized).controlSize(.small)
+                            ProgressView(value: normalized)
+                                .controlSize(.small)
+                                .accessibilityLabel("\(fan.name) speed range")
+                                .accessibilityValue("\(Int((normalized * 100).rounded())) percent")
                         }
                     }
                 }
@@ -318,6 +327,8 @@ struct MenuBarView: View {
                 if alertsEnabled {
                     HStack {
                         Slider(value: $alertThresholdC, in: 70...105, step: 1)
+                            .accessibilityLabel("CPU alert threshold")
+                            .accessibilityValue(TemperatureFormat.string(alertThresholdC, fahrenheit: useFahrenheit))
                         Text(TemperatureFormat.string(alertThresholdC, fahrenheit: useFahrenheit))
                             .monospacedDigit()
                             .frame(width: 44, alignment: .trailing)
@@ -374,5 +385,13 @@ struct MenuBarView: View {
 
     private var appVersion: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "—"
+    }
+
+    private var temperatureHistorySummary: String {
+        let values = model.history.compactMap(\.cpuTempC)
+        guard let current = values.last, let minimum = values.min(), let maximum = values.max() else {
+            return "No CPU temperature history available"
+        }
+        return "CPU temperature, current \(TemperatureFormat.string(current, fahrenheit: useFahrenheit)), minimum \(TemperatureFormat.string(minimum, fahrenheit: useFahrenheit)), maximum \(TemperatureFormat.string(maximum, fahrenheit: useFahrenheit))"
     }
 }

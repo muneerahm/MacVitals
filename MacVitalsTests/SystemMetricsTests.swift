@@ -275,28 +275,32 @@ final class SystemMetricsTests: XCTestCase {
     func testModulePresentationsUseAccessiblePlaceholdersWithoutSnapshotData() {
         XCTAssertEqual(
             ModuleKind.cpu.presentation(snapshot: nil),
-            ModulePresentation(symbol: "cpu", value: "—", accessibilityLabel: "CPU usage —")
+            ModulePresentation(symbol: "cpu", value: "—", accessibilityLabel: "CPU usage unavailable")
         )
         XCTAssertEqual(
             ModuleKind.memory.presentation(snapshot: nil),
-            ModulePresentation(symbol: "memorychip", value: "—", accessibilityLabel: "Memory used —")
+            ModulePresentation(symbol: "memorychip", value: "—", accessibilityLabel: "Memory used unavailable")
         )
         XCTAssertEqual(
             ModuleKind.network.presentation(snapshot: nil),
             ModulePresentation(
                 symbol: "arrow.up.arrow.down",
                 value: "↓— ↑—",
-                accessibilityLabel: "Network download —, upload —"
+                accessibilityLabel: "Network download unavailable, upload unavailable"
             )
         )
         XCTAssertEqual(
             ModuleKind.battery.presentation(snapshot: nil),
-            ModulePresentation(symbol: "battery.0percent", value: "—", accessibilityLabel: "Battery —")
+            ModulePresentation(symbol: "battery.0percent", value: "—", accessibilityLabel: "Battery unavailable")
         )
         XCTAssertEqual(
             ModuleKind.disk.presentation(snapshot: nil),
-            ModulePresentation(symbol: "internaldrive", value: "—", accessibilityLabel: "Startup disk used —")
+            ModulePresentation(symbol: "internaldrive", value: "—", accessibilityLabel: "Startup disk used unavailable")
         )
+    }
+
+    func testFreshInstallModuleDefaultsKeepThermalsPlusCPUOnly() {
+        XCTAssertEqual(ModuleKind.allCases.filter(\.defaultVisibility), [.cpu])
     }
 
     func testCPUModulePresentationMapsUsageIconTitleAndAccessibility() {

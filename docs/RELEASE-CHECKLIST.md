@@ -17,7 +17,7 @@ you want a download non-developers can double-click.
 - [x] Set version/build to **1.0 / 1**. The UI reads the bundle version; bump both
       values per release.
 - [x] Add an **app icon** (`MacVitals/Assets.xcassets/AppIcon.appiconset`).
-- [ ] Do a clean build on a Mac that has never run it, to catch missing files or
+- [ ] Do a clean build on a separate Mac that has never run it, to catch missing files or
       App Group registration issues.
 - [x] Re-review `SECURITY.md` after the system-module expansion. It distinguishes
       reading local interface counters from making network requests and inventory
@@ -35,16 +35,22 @@ you want a download non-developers can double-click.
 - [x] Scope review: public local APIs only for the new modules; no network requests,
       top-process or connection inspection, public IP/SSID/MAC/serial collection,
       private battery data, GPU clocks, SMART data, or disk throughput.
-- [x] Run `MacVitalsTests`: **36/36 passed** on arm64 macOS 26.5.1.
+- [x] Run `MacVitalsTests`: **37/37 passed** on arm64 macOS 26.5.1.
 - [x] Run an arm64 **Debug** build after the expansion.
 - [x] Run a clean unsigned universal **Release** build (arm64 + x86_64) for the
       reviewed implementation.
 - [x] Record six Release runtime samples at a 10-second interval: **0.0% CPU**
       except one **0.5%** polling wake, about **19 MB private memory**, and roughly
       **77 MB RSS**. Treat this as one-machine evidence, not a universal guarantee.
-- [ ] Complete the visual behavior matrix on a locked/clean Mac: six status items,
-      compact-value updates, every popover, hide/restore behavior, menu-bar crowding,
-      VoiceOver labels, and small/medium widget layouts.
+- [x] Render and review the Thermals and five system popovers from the real SwiftUI
+      views with privacy-safe sample data. The fresh-install render shows the intended
+      minimal default: fixed Thermals plus CPU only.
+- [x] Complete the code-level accessibility pass: dynamic status-item labels,
+      descriptive unavailable states, labeled charts/timestamps/alert threshold,
+      combined metric rows, and named or hidden progress indicators.
+- [ ] Complete the interactive VoiceOver and clean-Mac behavior matrix: spoken
+      navigation/announcements, compact-value updates, every live popover,
+      hide/restore behavior, menu-bar crowding/notch behavior, and small/medium widgets.
 - [ ] Complete runtime coverage on Intel and additional hardware: fanless Macs,
       desktops/no-battery Macs, and additional battery models.
 - [ ] Run the final signed app with registered App Group and verify shared thermal +
@@ -67,8 +73,9 @@ macvitals-*.txt
 ## Path A — GitHub source release (no paid developer membership required)
 
 - [x] Ensure `README.md`, `LICENSE`, `SECURITY.md`, and `docs/` are present and current.
-- [ ] Add README screenshots showing Thermals, the five optional status items/popovers,
-      and both compact widget sizes.
+- [x] Add privacy-safe README screenshots showing Thermals and the five optional
+      popovers with representative sample data.
+- [ ] Add both compact widget sizes after signed App Group runtime verification.
 - [x] Review the renamed working tree and prepare sanitized `main` from a fresh root commit for the public repository.
 - [x] Set the repo's **About**, topics (`macos`, `apple-silicon`, `menubar`,
       `swiftui`, `temperature`, `fan`, `cpu-monitor`, `memory-monitor`,

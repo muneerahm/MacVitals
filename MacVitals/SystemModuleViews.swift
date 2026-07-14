@@ -11,7 +11,10 @@ private struct ModuleHeader: View {
             Label(title, systemImage: systemImage).font(.headline)
             Spacer()
             if let date {
-                Text(date, style: .time).font(.caption2).foregroundStyle(.secondary)
+                Text(date, style: .time)
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .accessibilityLabel("Last updated \(date.formatted(date: .omitted, time: .shortened))")
             }
         }
     }
@@ -32,6 +35,7 @@ private struct MetricRow: View {
         }
         .font(.system(size: secondary ? 11 : 13))
         .foregroundStyle(secondary ? .secondary : .primary)
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -50,7 +54,9 @@ struct CPUMenuView: View {
                     Text("total usage").font(.caption).foregroundStyle(.secondary)
                     Spacer()
                 }
-                ProgressView(value: cpu.totalUsage).controlSize(.small)
+                ProgressView(value: cpu.totalUsage)
+                    .controlSize(.small)
+                    .accessibilityHidden(true)
                 cpuChart
                 MetricRow(title: "User", value: MetricFormat.percent(cpu.userUsage), systemImage: "person")
                 MetricRow(title: "System", value: MetricFormat.percent(cpu.systemUsage), systemImage: "gearshape")
@@ -128,7 +134,9 @@ struct MemoryMenuView: View {
                     Spacer()
                     pressureLabel(memory.pressure)
                 }
-                ProgressView(value: memory.usedFraction ?? 0).controlSize(.small)
+                ProgressView(value: memory.usedFraction ?? 0)
+                    .controlSize(.small)
+                    .accessibilityHidden(true)
                 memoryChart
                 MetricRow(title: "Used", value: MetricFormat.bytes(memory.usedBytes), systemImage: "chart.pie.fill")
                 MetricRow(title: "Available", value: MetricFormat.bytes(memory.availableBytes), systemImage: "circle.dotted")
@@ -267,7 +275,9 @@ struct BatteryMenuView: View {
                     Text(battery.state.rawValue.capitalized).font(.caption).foregroundStyle(.secondary)
                     Spacer()
                 }
-                ProgressView(value: battery.percentage).controlSize(.small)
+                ProgressView(value: battery.percentage)
+                    .controlSize(.small)
+                    .accessibilityHidden(true)
                 MetricRow(title: "Power source", value: battery.isOnACPower ? "Power adapter" : "Battery", systemImage: "powerplug")
                 MetricRow(title: battery.state == .charging ? "Until full" : "Remaining", value: MetricFormat.duration(battery.timeRemaining), systemImage: "clock")
                 if battery.isLowPowerModeEnabled {
@@ -315,7 +325,9 @@ struct DiskMenuView: View {
                     Text("used on startup disk").font(.caption).foregroundStyle(.secondary)
                     Spacer()
                 }
-                ProgressView(value: disk.usedFraction ?? 0).controlSize(.small)
+                ProgressView(value: disk.usedFraction ?? 0)
+                    .controlSize(.small)
+                    .accessibilityHidden(true)
                 MetricRow(title: "Used", value: MetricFormat.bytes(disk.usedBytes), systemImage: "internaldrive.fill")
                 MetricRow(title: "Available", value: MetricFormat.bytes(disk.availableBytes), systemImage: "externaldrive.badge.checkmark")
                 MetricRow(title: "Capacity", value: MetricFormat.bytes(disk.totalBytes), systemImage: "internaldrive")

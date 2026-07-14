@@ -95,7 +95,7 @@ struct MacVitalsWidgetView: View {
                 content(snapshot)
             } else {
                 VStack(spacing: 4) {
-                    Image(systemName: "fanblades").font(.title2)
+                    Image(systemName: "fanblades").font(.title2).accessibilityHidden(true)
                     Text("Open MacVitals to start monitoring")
                         .font(.caption)
                         .multilineTextAlignment(.center)
@@ -119,6 +119,7 @@ struct MacVitalsWidgetView: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Image(systemName: "fanblades")
+                    .accessibilityHidden(true)
                 Text("MacVitals").font(.headline)
                 Spacer()
             }
@@ -137,6 +138,7 @@ struct MacVitalsWidgetView: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Image(systemName: "fanblades")
+                        .accessibilityHidden(true)
                     Text("MacVitals").font(.headline)
                 }
                 row("CPU", TemperatureFormat.string(snapshot.cpuTempC, fahrenheit: entry.fahrenheit))
@@ -152,6 +154,7 @@ struct MacVitalsWidgetView: View {
             VStack(alignment: .leading, spacing: 3) {
                 Text(snapshot.date, style: .time)
                     .font(.caption2).foregroundStyle(.secondary)
+                    .accessibilityLabel("Last updated \(snapshot.date.formatted(date: .omitted, time: .shortened))")
                 row("CPU use", MetricFormat.percent(snapshot.system?.cpu?.totalUsage))
                 row("Memory", MetricFormat.percent(snapshot.system?.memory?.usedFraction))
                 row("Network ↓", MetricFormat.compactRate(snapshot.system?.network?.downloadBytesPerSecond))
@@ -192,6 +195,8 @@ struct MacVitalsWidgetView: View {
         .chartYAxis(.hidden)
         .chartYScale(domain: .automatic(includesZero: false))
         .frame(height: 34)
+        .accessibilityLabel("CPU temperature history")
+        .accessibilityValue("\(historyMinutes) minutes")
     }
 
     private func row(_ label: String, _ value: String) -> some View {
@@ -201,6 +206,7 @@ struct MacVitalsWidgetView: View {
             Text(value).monospacedDigit()
         }
         .font(.system(size: 12))
+        .accessibilityElement(children: .combine)
     }
 }
 

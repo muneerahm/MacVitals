@@ -113,11 +113,11 @@ backoff could further reduce work on unsupported Macs.
 | Feature | Status | Notes |
 |---|---|---|
 | Thermals status item | ✅ | Always enabled, always shows CPU temperature, and contains module visibility controls. |
-| CPU status item + popover | ⚠️ code/test verified; visual matrix pending | Compact usage; total/user/system/idle, load, cores, temperature/power, five-minute chart. |
-| Memory status item + popover | ⚠️ code/test verified; visual matrix pending | Compact used percentage; aggregate capacity, pressure, breakdown, five-minute chart. |
-| Network status item + popover | ⚠️ code/test verified; visual matrix pending | Compact up/down rate; local interface and session totals, five-minute chart. |
-| Battery status item + popover | ⚠️ hardware matrix pending | Charge/state/source/time/condition; no-battery state is implemented. Refreshed at most every 30 seconds. |
-| Disk status item + popover | ⚠️ code/test verified; visual matrix pending | Startup-volume used/available/capacity. Refreshed at most every 60 seconds. |
+| CPU status item + popover | ✅ code/test + rendered-view verified; live matrix pending | Compact usage; total/user/system/idle, load, cores, temperature/power, five-minute chart. |
+| Memory status item + popover | ✅ code/test + rendered-view verified; live matrix pending | Compact used percentage; aggregate capacity, pressure, breakdown, five-minute chart. |
+| Network status item + popover | ✅ code/test + rendered-view verified; live matrix pending | Compact up/down rate; local interface and session totals, five-minute chart. |
+| Battery status item + popover | ✅ rendered-view verified / ⚠️ hardware matrix pending | Charge/state/source/time/condition; no-battery state is implemented. Refreshed at most every 30 seconds. |
+| Disk status item + popover | ✅ code/test + rendered-view verified; live matrix pending | Startup-volume used/available/capacity. Refreshed at most every 60 seconds. |
 | CPU / GPU / SoC temps | ✅ tested model / ⚠️ others | Fed by HID + SMC; shows hottest per category. GPU blank on chips with no GPU-specific sensor. |
 | Fan RPM + load bars | ✅ tested model / ⚠️ others | 80-byte ABI is unit-tested. Labels are positional (Left/Right). |
 | CPU / GPU power | ✅ tested model / ⚠️ others | Apple Silicon only; unit and range validated. |
@@ -131,7 +131,8 @@ backoff could further reduce work on unsupported Macs.
 
 **Open items / future polish**
 
-1. Capture a current menu-dropdown and widget screenshot after signed App Group testing.
+1. Capture both widget sizes after signed App Group testing; current app-popover
+   screenshots are now in the README.
 2. Optional fixed history-graph range.
 3. GPU temperature is hardware-dependent; consider labeling the CPU row "Die
    (hottest)" on chips that only expose generic die zones, to avoid implying a

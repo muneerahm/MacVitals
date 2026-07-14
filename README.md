@@ -11,10 +11,17 @@ no third-party runtime or package dependencies.
 
 > **Status:** thermal sensors are working end-to-end on tested M-series Pro/Max
 > hardware. The new system readers pass unit/build/runtime sampling on the development
-> Mac; the final popover/widget visual matrix remains an explicit release gate.
+> Mac, and all six app popovers have been reviewed with privacy-safe sample data.
+> Interactive clean-Mac/VoiceOver and signed-widget runtime checks remain open.
 > Other Mac models remain community-tested; see the support levels below.
 > Reads sensors and local system counters only — it never controls fans, makes no
 > network requests, and sends no data off-device. See [Privacy & Security](SECURITY.md).
+
+<p align="center">
+  <img src="docs/images/thermals-overview.png" width="420" alt="MacVitals Thermals popover showing CPU, GPU and SoC temperatures, two fan speeds, power, settings, and the minimal CPU-only module default">
+</p>
+
+<p align="center"><sub>Representative sample data; no personal or live-machine information is shown.</sub></p>
 
 ---
 
@@ -51,6 +58,14 @@ no third-party runtime or package dependencies.
 - **Notification Center widget** — small and medium sizes compactly include thermal
   and system metrics; the app requests a refresh at most once per minute, while
   macOS controls delivery.
+
+## System module popovers
+
+![MacVitals CPU, Memory, Network, Battery, and Disk popovers with representative sample data](docs/images/system-modules.png)
+
+The independent menu-bar modules keep headline values compact and move detailed
+breakdowns into their popovers. Memory uses Activity Monitor-style accounting;
+Network shows only aggregate local interface counters.
 
 ---
 
@@ -120,7 +135,7 @@ Full architecture, per-chip behavior, and error handling: **[docs/COMPATIBILITY.
 
 ## Testing
 
-The `MacVitalsTests` target has 36 tests covering the sensor ABI/decoders, temperature
+The `MacVitalsTests` target has 37 tests covering the sensor ABI/decoders, temperature
 classification, system-metric delta math and bounds, menu presentation, history,
 persisted-snapshot compatibility, and formatting.
 Run it with:
